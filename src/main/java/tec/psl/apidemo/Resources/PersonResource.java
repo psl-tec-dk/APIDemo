@@ -18,10 +18,10 @@ public class PersonResource {
     }
 
     @GET
-    @Produces("text/plain")
+    @Produces(MediaType.APPLICATION_JSON)
     @Path("/{persId}")
-    public String getPersonById(@PathParam("persId") int persId) {
-        return "GET getPersonsById ID = " + persId;
+    public Person getPersonById(@PathParam("persId") int persId) {
+        return dataService.getPersonById(persId);
     }
 
     @POST
@@ -32,16 +32,17 @@ public class PersonResource {
     }
 
     @PUT
-    @Produces("text/plain")
+    @Produces(MediaType.APPLICATION_JSON)
     @Path("/{persId}")
-    public String updatePerson(@PathParam("persId") int persId) {
-        return "PUT updatePerson ID = " + persId;
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Person updatePerson(@PathParam("persId") int persId, Person person) {
+        return dataService.updatePerson(persId, person);
     }
     @DELETE
-    @Produces("text/plain")
+    @Produces(MediaType.APPLICATION_JSON)
     @Path("/{persId}")
-    public String deletePerson(@PathParam("persId") int persId) {
-        return "DELETE deletePerson ID = " + persId;
+    public int deletePerson(@PathParam("persId") int persId) {
+        return dataService.deletePerson(persId);
     }
 
 }

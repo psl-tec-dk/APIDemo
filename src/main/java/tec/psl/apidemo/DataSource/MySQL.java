@@ -48,6 +48,7 @@ public class MySQL {
                         rs.getBoolean("student"),
                         rs.getString("lastUpdated")
                 );
+                //System.out.println(p.toString());
                 pList.add(p);
             }
         }
@@ -100,13 +101,48 @@ public class MySQL {
                         rs.getString("lastUpdated")
                 );
             }
-            System.out.println(p.toString());
         }
         catch (SQLException e) {
             System.out.println("Error " + e.getMessage());
         }
         closeConn();
         return p;
+    }
+
+    public Person updatePerson(int persId, Person person) {
+        connect();
+        Person p = null;
+        String sql = "update persons set firstName = ?, lastName = ?, student = ? where persId = ?";
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, person.getFirstName());
+            pstmt.setString(2, person.getLastName());
+            pstmt.setBoolean(3, person.isStudent());
+            pstmt.setInt(4, persId);
+            pstmt.executeUpdate();
+            p = getPersonById(persId);
+        }
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        closeConn();
+        return p;
+    }
+
+    public int deletePerson(int persId) {
+        connect();
+        int res = 0;
+        String sql = "delete from persons where persId = ?";
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, persId);
+            res = pstmt.executeUpdate();
+        }
+        catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        closeConn();
+        return res;
     }
 
 }

@@ -14,7 +14,19 @@ public class PersonDataService {
         return dbh.getAllPersons();
     }
 
+    public Person getPersonById(int persId) {
+        return dbh.getPersonById(persId);
+    }
+
     public Person addPerson(Person person) {
         return dbh.addPerson(person);
+    }
+
+    public Person updatePerson(int persId, Person person){
+        return dbh.updatePerson(persId, person);
+    }
+
+    public int deletePerson(int persId){
+        return dbh.deletePerson(persId);
     }
 }
